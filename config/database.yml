@@ -1,0 +1,52 @@
+# PostgreSQL. Versions 9.3 and up are supported.
+#
+# Install the pg driver:
+#   gem install pg
+# On macOS with Homebrew:
+#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
+# On Windows:
+#   gem install pg
+#       Choose the win32 build.
+#       Install PostgreSQL and put its /bin directory on your path.
+#
+# Configure Using Gemfile
+# gem "pg"
+#
+# config/database.yml
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: ROOT                 # PostgreSQL username you created
+  password: PASSWORD7412    # Password you set for the user
+  host: db                 # Required for TCP connection
+  port: 5432                      # Default PostgreSQL port
+
+development:
+  <<: *default
+  database: blog_development
+
+test:
+  <<: *default
+  database: blog_test
+
+production:
+  <<: *default
+  database: blog_production
+  username: blog                  # Different username for production
+  password: <%= ENV["BLOG_DATABASE_PASSWORD"] %>
+
+  # Remove these unless you specifically need separate databases:
+  # cache:
+  #   <<: *default
+  #   database: blog_production_cache
+  #   migrations_paths: db/cache_migrate
+  # queue:
+  #   <<: *default
+  #   database: blog_production_queue
+  #   migrations_paths: db/queue_migrate
+  # cable:
+  #   <<: *default
+  #   database: blog_production_cable
+  #   migrations_paths: db/cable_migrate
